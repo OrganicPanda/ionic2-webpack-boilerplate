@@ -7,6 +7,15 @@ import {StatusBar} from 'ionic-native';
 // import {SignupPage} from './pages/signup/signup';
 // import {TutorialPage} from './pages/tutorial/tutorial';
 
+console.log('yo');
+
+import 'meteor-imports';
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+
+console.log('Meteor', Meteor);
+console.log('Mongo', Mongo);
+
 @App({
   template: require('./app.html'),
   // providers: [ConferenceData, UserData],

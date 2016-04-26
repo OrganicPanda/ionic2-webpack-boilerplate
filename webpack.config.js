@@ -4,6 +4,7 @@ let path = require('path'),
     webpack = require('webpack'),
     pkg = require('./package.json'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
+    MeteorImportsPlugin = require('meteor-imports-webpack-plugin'),
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
@@ -33,7 +34,15 @@ let basePlugins = [
         template: path.join(paths.src, 'index.html'),
         inject: 'body'
     }),
-    new ExtractTextPlugin("styles.[hash].css")
+    new ExtractTextPlugin("styles.[hash].css"),
+    new MeteorImportsPlugin({
+      ROOT_URL: 'http://localhost:3000/',
+      DDP_DEFAULT_CONNECTION_URL: 'http://localhost:3000/',
+      PUBLIC_SETTINGS: {},
+      meteorFolder: 'server',
+      meteorEnv: { NODE_ENV: 'development' },
+      exclude: ['ecmascript']
+    })
 ];
 
 let devPlugins = [
@@ -99,7 +108,7 @@ module.exports = {
             // }, {
             {
               test: /\.js$/,
-              exclude: /(node_modules)/,
+              exclude: /(node_modules|meteor)/,
               loader: 'babel',
               query: {
                 cacheDirectory: true,
@@ -108,6 +117,7 @@ module.exports = {
               }
             }, {
                 test: /\.json$/,
+                exclude: /(meteor)/,
                 loader: "json"
             }, {
                 test: /\.(png|jpg|svg)$/,
