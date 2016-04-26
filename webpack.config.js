@@ -14,7 +14,7 @@ let paths = {
 let devtool = '#cheap-eval-source-map';
 let appEntries = [];
 let baseAppEntries = [
-    path.join(paths.src, 'app')
+    path.join(paths.src, 'app.js')
 ];
 
 let devAppEntries = [
@@ -91,11 +91,21 @@ module.exports = {
             //   loaders.tslint,
         ],
         loaders: [
+            // {
+            //     test: /\.ts$/,
+            //     exclude: /(node_modules)/,
+            //     loader: 'awesome-typescript-loader',
+            //     include: paths.src
+            // }, {
             {
-                test: /\.ts$/,
-                exclude: /(node_modules)/,
-                loader: 'awesome-typescript-loader',
-                include: paths.src
+              test: /\.js$/,
+              exclude: /(node_modules)/,
+              loader: 'babel',
+              query: {
+                cacheDirectory: true,
+                plugins: ['transform-decorators-legacy'],
+                presets: ['es2015']
+              }
             }, {
                 test: /\.json$/,
                 loader: "json"
